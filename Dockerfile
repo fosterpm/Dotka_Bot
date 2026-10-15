@@ -1,8 +1,12 @@
 FROM python:3.11-slim
 
-# Устанавливаем FFmpeg и необходимые системные утилиты Linux
+# Устанавливаем системные зависимости, компиляторы и FFmpeg
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    gcc \
+    libffi-dev \
+    libopus-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
