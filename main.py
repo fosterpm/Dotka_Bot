@@ -639,7 +639,11 @@ async def play_radio(ctx, station_name: str = None):
         try:
             if ctx.voice_client.is_playing():
                 ctx.voice_client.stop()
-            raw_source = discord.FFmpegPCMAudio(stream_url, **ffmpeg_options)
+            ffmpeg_opts = {
+                'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+                'options': '-vn -b:a 128k'
+            }
+            raw_source = discord.FFmpegPCMAudio(stream_url, **ffmpeg_opts)
             source = discord.PCMVolumeTransformer(raw_source, volume=CURRENT_VOLUME)
             ctx.voice_client.play(source, after=lambda e: print(f'Помилка радіо: {e}') if e else None)
             await ctx.send(f"📻 Зараз грає радіостанція: **{title}** (гучність `{int(CURRENT_VOLUME * 100)}%`) ")
