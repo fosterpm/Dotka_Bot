@@ -4,3 +4,4 @@ yt-dlp>=2024.0.0
 requests>=2.3.1
 python-dotenv>=1.0.0
 flask
+opuslib>=3.0.1
